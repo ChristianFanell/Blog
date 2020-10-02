@@ -53,20 +53,20 @@ namespace FoodBlogApi.Controllers
 
                 if (user != null)
                 {
-                    var nickName = await _forumRepo.GetAuthorAsync(user.UserName);
+                    var author = await _forumRepo.GetAuthorAsync(user.UserName);
 
                     await _signInManager.SignOutAsync();
                     if ((await _signInManager.PasswordSignInAsync(login.Name, login.Password, false, false)).Succeeded)
                     {
                         var userId = user.Id;
                         var roles = await _userManager.GetRolesAsync(user);
-                        var token = _authService.CreateToken(login, roles, nickName.NickName);
+                        var token = _authService.CreateToken(login, roles, author.NickName);
 
                         return Ok(new
                         {
                             Token = token,
                             UserName = user.UserName,
-                            Email = user.NormalizedEmail,
+                            nickName = author.NickName
                         });
                     }
                 } 

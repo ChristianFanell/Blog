@@ -29,7 +29,8 @@ namespace FoodBlogApi.AutoMapperHelpers
                 .ForMember(
                     dest => dest.ImageId,
                     opt => opt.MapFrom(src => src.Photo.PhotoId)
-                );
+                )
+                .ReverseMap();
                 
 
             // forum

@@ -30,6 +30,14 @@ namespace FoodBlogApi.Services
             return addedArticle.Entity;
         }
 
+        public async Task<Article> DeleteArticleAsync(Article article)
+        {
+            var deletedArticle = context.Articles.Remove(article);
+            await context.SaveChangesAsync();
+
+            return deletedArticle.Entity;
+        }
+
         public async Task<ArticleDTO> GetArticleAsync(int id)
         {
             var article = await context.Articles
@@ -40,10 +48,14 @@ namespace FoodBlogApi.Services
             return articleDTO;
         }
 
+
         // articles crud
-        public async Task<List<ArticleDTO>> GetArticlesAsync()
+        public async Task<List<ArticleDTO>> GetArticlesAsync(Pagination pages)
         {
-            var articles = await context.Articles.AsNoTracking()
+            var articles = await context.Articles
+                .OrderByDescending(td => td.ArticleId)
+                .Skip(pages.Offset ?? 0)
+                .Take(pages.NumberOfPosts ?? 5)
                 .Include(td => td.Author)
                 .Include(td => td.Photo)
                 .OrderByDescending(td => td.ArticleId)
@@ -54,7 +66,11 @@ namespace FoodBlogApi.Services
             return articleDTO;
         }
 
-        
+        public async Task<Article> GetArticleToDeleteAsync(int articleId)
+        {
+            var article = await context.Articles.FindAsync(articleId);
 
+            return article;
+        }
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FoodBlogApi.DTO;
+using FoodBlogApi.Entities;
 using FoodBlogApi.Models;
 using FoodBlogApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -38,11 +40,12 @@ namespace FoodBlogApi.Controllers
 
 
         // TODO:
-        [HttpDelete]
-        public IActionResult DeleteForumPost(int id)
-        {
-            return Ok("Deleted");
-        }
+        //[HttpDelete]
+        //public async Task<ArticleDTO> DeleteForumPost(int id)
+        //{
+            
+        //    return Ok("Deleted");
+        //}
 
         [HttpPut] 
         public IActionResult UpdateArticle(int id)
@@ -55,6 +58,7 @@ namespace FoodBlogApi.Controllers
         {
             return Ok("User is now banned!");
         }
+
 
         [HttpPost]
         public async Task<ActionResult> CreateUser([FromBody] User newUser)
@@ -71,7 +75,6 @@ namespace FoodBlogApi.Controllers
             }
 
             return BadRequest("Could not add user");
-
         }
 
     }

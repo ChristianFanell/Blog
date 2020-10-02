@@ -7,5 +7,9 @@ namespace FoodBlogApi.Services {
     {
         Task<Author> AddUser (User newUser);
 
+        //Task<Author> BanUser(int id);
+
+        //Task<Author> DeleteUser(int id);
+
     }
 }

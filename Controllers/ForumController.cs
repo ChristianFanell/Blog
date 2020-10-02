@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodBlogApi.Controllers
 {
-    // [Authorize(Roles="User, Admin")]
+    [Authorize(Roles = "User, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForumController : ControllerBase

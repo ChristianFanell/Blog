@@ -34,9 +34,25 @@ namespace FoodBlogApi.Services
             return added.Entity;
         }
 
-        public Task<Photo> DeletePhoto(string id)
+        public async Task<Photo> DeletePhoto(string id)
         {
-            throw new NotImplementedException();
+            var photoToDeleteInDb = await _context.Photos.FindAsync(id);
+
+            if (photoToDeleteInDb is null)
+            {
+                throw new Exception("could not find photo in db");
+            }
+            var photoToDeletedInCloud = _photoAccessor.DeletePhoto(id);
+
+            if (photoToDeletedInCloud is null)
+            {
+                throw new Exception("Could not delete the photoo");
+            }
+            
+            var deletedPhoto = _context.Photos.Remove(photoToDeleteInDb);
+ 
+            await _context.SaveChangesAsync();
+            return deletedPhoto.Entity;
         }
     }
 }

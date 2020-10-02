@@ -26,7 +26,10 @@ namespace FoodBlogApi.Models
 
         public async Task<AuthorDTO> GetAuthorAsync(string email)
         {
-            var user = await Task.Run(() => context.Authors.Where(td => td.Email == email).FirstOrDefault());
+            var user = await Task.Run(() => context.Authors
+                .AsNoTracking()
+                .Where(td => td.Email == email)
+                .FirstOrDefault());
             var userDTO = mapper.Map<AuthorDTO>(user);
 
             return userDTO;
@@ -83,7 +86,7 @@ namespace FoodBlogApi.Models
         // httpdelete
         public async Task<ForumPost> DeleteForumPostAsync(int id)
         {
-            var forumPostToDelete = await context.ForumPosts.FirstAsync(td => td.AuthorId == id);                                                                
+            var forumPostToDelete = await context.ForumPosts.AsNoTracking().FirstAsync(td => td.AuthorId == id);                                                                
             var result = context.ForumPosts.Remove(forumPostToDelete);
 
             if (result != null) await context.SaveChangesAsync();

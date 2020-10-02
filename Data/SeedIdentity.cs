@@ -28,6 +28,10 @@ namespace FoodBlogApi.Data
             {
                 await rManager.CreateAsync(new IdentityRole("User"));
             }
+            if (!await rManager.RoleExistsAsync("Writer"))
+            {
+                await rManager.CreateAsync(new IdentityRole("Writer"));
+            }
         }
 
         private static async Task CreateUsers(UserManager<IdentityUser> uManager)
@@ -36,6 +40,7 @@ namespace FoodBlogApi.Data
 
             await uManager.CreateAsync(Admin, "Secretpass1!");
             await uManager.AddToRoleAsync(Admin, "Admin");
+            await uManager.AddToRoleAsync(Admin, "Writer");
 
 
         }
