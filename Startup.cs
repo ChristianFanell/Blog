@@ -57,7 +57,7 @@ namespace FoodBlogApi
             services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<IdentityDbContext>();
 
-            // för chat och notifieringar
+            // for chat and notifications
             // services.AddSignalR();
 
             var appSettingsSections = Configuration.GetSection("AppSettings");     
